@@ -660,7 +660,6 @@
         <xs:sequence>
             <xs:element name="widget" type="php-class" minOccurs="1"
                         maxOccurs="unbounded"/>
-            maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
