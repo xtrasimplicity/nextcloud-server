@@ -39,11 +39,9 @@ namespace OCP\Dashboard\Model;
  */
 interface IWidgetEvent {
 
-
 	const BROADCAST_USER = 'user';
 	const BROADCAST_GROUP = 'group';
 	const BROADCAST_GLOBAL = 'global';
-
 
 	/**
 	 * @since 15.0.0
@@ -150,3 +148,4 @@ interface IWidgetEvent {
 	public function setCreation(int $creation): IWidgetEvent;
 
 }
+

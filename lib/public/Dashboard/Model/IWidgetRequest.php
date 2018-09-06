@@ -45,15 +45,6 @@ interface IWidgetRequest {
 	/**
 	 * @since 15.0.0
 	 *
-	 * IWidgetRequest constructor.
-	 *
-	 * @param string $widgetId
-	 */
-	public function __construct(string $widgetId);
-
-	/**
-	 * @since 15.0.0
-	 *
 	 * @return string
 	 */
 	public function getWidgetId(): string;
@@ -84,6 +75,15 @@ interface IWidgetRequest {
 	public function setWidget(IDashboardWidget $widget): IWidgetRequest;
 
 	/**
+	 * string to ident the request sent using the API from the front-end
+	 *
+	 *  net.requestWidget(
+	 *    {
+	 *     widget: widgetId,
+	 *     request: request
+	 *    },
+	 *    callback);
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -107,6 +107,8 @@ interface IWidgetRequest {
 	public function getResult(): array;
 
 	/**
+	 * set the result array that will be sent to the callback (front-end)
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param array $result
@@ -116,13 +118,28 @@ interface IWidgetRequest {
 	public function setResult(array $result): IWidgetRequest;
 
 	/**
+	 * add a result (as string)
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $key
-	 * @param string|array $result
+	 * @param string $result
 	 *
 	 * @return $this
 	 */
-	public function addResult(string $key, $result): IWidgetRequest;
+	public function addResult(string $key, string $result): IWidgetRequest;
+
+	/**
+	 * add a result (as array)
+	 *
+	 * @since 15.0.0
+	 *
+	 * @param string $key
+	 * @param array $result
+	 *
+	 * @return $this
+	 */
+	public function addResultArray(string $key, array $result): IWidgetRequest;
 
 }
+

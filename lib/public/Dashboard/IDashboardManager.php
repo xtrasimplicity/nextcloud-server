@@ -44,6 +44,8 @@ use OCP\Dashboard\Model\IWidgetSettings;
 interface IDashboardManager {
 
 	/**
+	 * returns IWidgetSettings for a widgetId and userId.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $widgetId
@@ -55,6 +57,16 @@ interface IDashboardManager {
 	public function getWidgetSettings(string $widgetId, string $userId): IWidgetSettings;
 
 	/**
+	 * Create push notifications for users.
+	 * $payload is an array that will be send to the Javascript method
+	 * called on push.
+	 * $uniqueId needs to be used if you send the push to multiples users
+	 * and multiples groups so that one user does not have duplicate
+	 * notifications.
+	 *
+	 * Push notifications are created in database and broadcast to user
+	 * that are running dashboard.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $widgetId
@@ -66,6 +78,8 @@ interface IDashboardManager {
 	public function createUsersEvent(string $widgetId, array $users, array $payload, string $uniqueId = '');
 
 	/**
+	 * Create push notifications for groups. (ie. createUsersEvent())
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $widgetId
@@ -77,6 +91,8 @@ interface IDashboardManager {
 	public function createGroupsEvent(string $widgetId, array $groups, array $payload, string $uniqueId = '');
 
 	/**
+	 * Create push notifications for everyone. (ie. createUsersEvent())
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $widgetId
@@ -87,3 +103,4 @@ interface IDashboardManager {
 	public function createGlobalEvent(string $widgetId, array $payload, string $uniqueId = '');
 
 }
+

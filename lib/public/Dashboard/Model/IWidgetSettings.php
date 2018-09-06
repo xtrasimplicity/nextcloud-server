@@ -39,7 +39,6 @@ namespace OCP\Dashboard\Model;
  */
 interface IWidgetSettings {
 
-
 	/**
 	 * @since 15.0.0
 	 *
@@ -49,7 +48,6 @@ interface IWidgetSettings {
 	 * @param string $widgetId
 	 */
 	public function __construct(string $widgetId, string $userId);
-
 
 	/**
 	 * @since 15.0.0
@@ -67,7 +65,6 @@ interface IWidgetSettings {
 	 */
 	public function setUserId(string $userId): IWidgetSettings;
 
-
 	/**
 	 * @since 15.0.0
 	 *
@@ -81,7 +78,6 @@ interface IWidgetSettings {
 	 * @return $this
 	 */
 	public function setWidgetId(string $widgetId): IWidgetSettings;
-
 
 	/**
 	 * @since 15.0.0
@@ -99,7 +95,6 @@ interface IWidgetSettings {
 	 */
 	public function setPosition(array $position): IWidgetSettings;
 
-
 	/**
 	 * @since 15.0.0
 	 *
@@ -113,7 +108,6 @@ interface IWidgetSettings {
 	 * @return $this
 	 */
 	public function setSettings(array $settings): IWidgetSettings;
-
 
 	/**
 	 * @since 15.0.0
@@ -131,5 +125,5 @@ interface IWidgetSettings {
 	 */
 	public function setEnabled(bool $enabled): IWidgetSettings;
 
-
 }
+

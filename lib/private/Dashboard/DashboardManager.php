@@ -131,3 +131,4 @@ class DashboardManager implements IDashboardManager {
 	}
 
 }
+
