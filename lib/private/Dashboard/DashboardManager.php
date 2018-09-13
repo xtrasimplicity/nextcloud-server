@@ -36,6 +36,7 @@ use OCP\Dashboard\Exceptions\DashboardAppNotAvailableException;
 use OCP\App\IAppManager;
 use OCP\Dashboard\IDashboardManager;
 use OCP\Dashboard\Model\IWidgetSettings;
+use OCP\IServerContainer;
 
 
 /**
@@ -49,9 +50,18 @@ class DashboardManager implements IDashboardManager {
 	/** @var IAppManager */
 	private $appManager;
 
+	/** @var IServerContainer */
+	private $container;
 
-	public function __construct(IAppManager $appManager) {
+	/**
+	 * DashboardManager constructor.
+	 *
+	 * @param IAppManager $appManager
+	 * @param IServerContainer $container
+	 */
+	public function __construct(IAppManager $appManager, IServerContainer $container) {
 		$this->appManager = $appManager;
+		$this->container = $container;
 	}
 
 
@@ -66,9 +76,9 @@ class DashboardManager implements IDashboardManager {
 		}
 
 		try {
-			return \OC::$server->query($service);
+			return $this->container->query($service);
 		} catch (Exception $e) {
-			throw new DashboardAppNotAvailableException('issue while querying ' . $service);
+			throw new DashboardAppNotAvailableException('issue while querying ' . $service . ': ' . $e->getMessage());
 		}
 	}
 
