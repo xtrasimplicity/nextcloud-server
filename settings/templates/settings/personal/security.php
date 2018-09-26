@@ -100,3 +100,28 @@ if($_['passwordChangeSupported']) {
 		</div>
 	</div>
 </div>
+
+<div id="two-factor-auth" class="section">
+	<h2><?php p($l->t('Two-Factor Authentication'));?></h2>
+	<?php
+	if ($_['twoFactorProviderData']['enabled']) {
+		p($l->t('Two-factor authentication is enabled on your account.'));
+	} else {
+		p($l->t('Two-factor authentication is disabled on your account.'));
+	}
+	?>
+	<?php foreach ($_['twoFactorProviderData']['providers'] as $data) { ?>
+		<?php
+		/** @var \OCP\Authentication\TwoFactorAuth\IProvidesPersonalSettings $provider */
+		$provider = $data['provider'];
+		/** @var \OCP\Authentication\TwoFactorAuth\IPersonalProviderSettings $settings */
+		$settings = $data['settings'];
+		?>
+		<div>
+		<h3><?php p($provider->getDisplayName()) ?></h3>
+			<div>
+				<?php print_unescaped($settings->getBody()->fetchPage()) ?>
+			</div>
+		</div>
+	<?php } ?>
+</div>
