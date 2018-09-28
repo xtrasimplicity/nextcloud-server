@@ -42,6 +42,13 @@ pipeline:
     when:
       matrix:
         TESTS: vue-build-accessibility
+  vue-build-backupcodes:
+    image: node
+    commands:
+      - ./build/vue-builds.sh ./apps/twofactor_backupcodes/js/settings.js
+    when:
+      matrix:
+        TESTS: vue-build-backupscodes
   checkers:
     image: nextcloudci/php7.0:php7.0-19
     commands:
@@ -284,7 +291,7 @@ pipeline:
     image: nextcloudci/php7.1:php7.1-16
     commands:
       - sleep 10 # gives the database enough time to initialize
-      - NOCOVERAGE=true TEST_SELECTION=DB ./autotest.sh pgsql
+      - POSTGRES=${POSTGRES} NOCOVERAGE=true TEST_SELECTION=DB ./autotest.sh pgsql
     when:
       matrix:
         DB: postgres
@@ -582,6 +589,16 @@ pipeline:
         when:
           matrix:
             TESTS: integration-ldap-openldap-uid-features
+  integration-ldap-openldap-numerical-id-features:
+    image: nextcloudci/integration-php7.0:integration-php7.0-6
+    commands:
+    - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
+    - ./occ app:enable user_ldap
+    - cd build/integration
+    - ./run.sh ldap_features/openldap-numerical-id.feature
+    when:
+      matrix:
+        TESTS: integration-ldap-openldap-numerical-id-features
   integration-trashbin:
     image: nextcloudci/integration-php7.0:integration-php7.0-8
     commands:
@@ -756,6 +773,7 @@ matrix:
     - TESTS: vue-build-updatenotification
     - TESTS: vue-build-oauth2
     - TESTS: vue-build-accessibility
+    - TESTS: vue-build-backupcodes
     - TESTS: nodb-codecov
       ENABLE_REDIS: true
     - TESTS: db-codecov
@@ -852,6 +870,8 @@ matrix:
       ENABLE_OPENLDAP: true
     - TESTS: integration-ldap-openldap-uid-features
       ENABLE_OPENLDAP: true
+    - TESTS: integration-ldap-openldap-numerical-id-features
+      ENABLE_OPENLDAP: true
     - TESTS: integration-trashbin
     - TESTS: integration-remote-api
     - TESTS: integration-download
@@ -936,6 +956,7 @@ services:
     image: postgres:9
     environment:
       - POSTGRES_USER=oc_autotest
+      - POSTGRES_DB=oc_autotest_dummy
       - POSTGRES_PASSWORD=owncloud
     tmpfs:
       - /var/lib/postgresql/data
@@ -947,6 +968,7 @@ services:
       image: postgres:10
       environment:
         - POSTGRES_USER=oc_autotest
+        - POSTGRES_DB=oc_autotest_dummy
         - POSTGRES_PASSWORD=owncloud
       tmpfs:
         - /var/lib/postgresql/data
@@ -1032,7 +1054,7 @@ services:
       matrix:
         TESTS: acceptance
   openldap:
-    image: nextcloudci/openldap:openldap-4
+    image: nextcloudci/openldap:openldap-5
     environment:
       - SLAPD_DOMAIN=nextcloud.ci
       - SLAPD_ORGANIZATION=Nextcloud
