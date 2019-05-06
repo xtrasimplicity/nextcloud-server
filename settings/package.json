@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "webpack --config webpack.dev.js",
     "watch": "webpack --progress --watch --config webpack.dev.js",
-    "build": "webpack --progress --hide-modules --config webpack.prod.js"
+    "build": "webpack --progress --hide-modules --config webpack.prod.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -22,7 +24,8 @@
     "vue-multiselect": "^2.1.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-router-sync": "^5.0.0"
+    "vuex-router-sync": "^5.0.0",
+    "snyk": "^1.161.1"
   },
   "browserslist": [
     "last 2 versions",
@@ -41,5 +44,6 @@
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.1",
     "webpack-merge": "^4.1.4"
-  }
+  },
+  "snyk": true
 }
